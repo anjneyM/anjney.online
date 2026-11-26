@@ -1,0 +1,1240 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta
+			name="description"
+			content="Anjney Mital — tech policy, law, and advocacy. New Delhi. Open to roles in tech policy, compliance, research, data privacy, and legal practice."
+		/>
+		<title>Anjney Mital — Tech Policy, Law, Advocacy</title>
+		<link
+			rel="icon"
+			href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cg stroke='%2354c98c' stroke-width='9' stroke-linecap='round'%3E%3Cline x1='50' y1='14' x2='50' y2='86'/%3E%3Cline x1='50' y1='14' x2='50' y2='86' transform='rotate(60 50 50)'/%3E%3Cline x1='50' y1='14' x2='50' y2='86' transform='rotate(120 50 50)'/%3E%3C/g%3E%3C/svg%3E"
+		/>
+		<script>
+			// set theme before first paint to avoid a flash
+			(function () {
+				var t = null;
+				try {
+					t = localStorage.getItem("anjney-theme");
+				} catch (e) {}
+				if (!t)
+					t = matchMedia("(prefers-color-scheme: light)").matches
+						? "light"
+						: "dark";
+				document.documentElement.setAttribute("data-theme", t);
+			})();
+		</script>
+		<style>
+			/* ---- palette ---- */
+			:root {
+				--bg: #050505;
+				--ink: #f4f1e8;
+				--body: #c9c6bb;
+				--dim: #8b887d;
+				--line: #23221d;
+				--accent: #54c98c;
+				--accent-ink: #0d1f16;
+				--card: #0c0b09;
+				/* pill colors — dark */
+				--pr: #7ea2ff;
+				--pp: #c5a3ff;
+				--pa: #ff8a5f;
+				--pl: #72d9ac;
+				--pm: #ffd479;
+			}
+			[data-theme="light"] {
+				--bg: #faf8f3;
+				--ink: #141310;
+				--body: #3c3a34;
+				--dim: #6f6c64;
+				--line: #e4e1d7;
+				--accent: #148a5c;
+				--accent-ink: #faf8f3;
+				--card: #f3f0e9;
+				/* pill colors — light */
+				--pr: #3d5fc0;
+				--pp: #7a4ec2;
+				--pa: #d64a20;
+				--pl: #1e8a5c;
+				--pm: #a8770e;
+			}
+
+			* {
+				box-sizing: border-box;
+			}
+			html {
+				scroll-behavior: smooth;
+			}
+
+			body {
+				margin: 0;
+				background: var(--bg);
+				color: var(--ink);
+				font-family:
+					Charter, "Iowan Old Style", "Palatino Linotype", Palatino, Georgia,
+					serif;
+				font-size: 1.15rem;
+				line-height: 1.65;
+				-webkit-font-smoothing: antialiased;
+				transition:
+					background 0.35s ease,
+					color 0.35s ease;
+			}
+
+			::selection {
+				background: var(--accent);
+				color: var(--accent-ink);
+			}
+
+			/* ---- theme toggle ---- */
+
+			.theme-toggle {
+				position: fixed;
+				top: 1.25rem;
+				right: 1.5rem;
+				z-index: 20;
+				display: grid;
+				place-items: center;
+				width: 2.4rem;
+				height: 2.4rem;
+				border-radius: 50%;
+				background: color-mix(in srgb, var(--bg) 82%, transparent);
+				backdrop-filter: blur(10px);
+				-webkit-backdrop-filter: blur(10px);
+				border: 1px solid var(--line);
+				color: var(--dim);
+				cursor: pointer;
+				transition:
+					color 0.2s,
+					border-color 0.2s;
+			}
+			.theme-toggle:hover {
+				color: var(--accent);
+				border-color: var(--accent);
+			}
+			.theme-toggle svg {
+				width: 1.05rem;
+				height: 1.05rem;
+			}
+			[data-theme="dark"] .icon-sun {
+				display: none;
+			}
+			[data-theme="light"] .icon-moon {
+				display: none;
+			}
+
+			/* ---- layout ---- */
+
+			main {
+				max-width: 34rem;
+				margin: 0 auto;
+				padding: 9rem 1.5rem 4rem;
+			}
+
+			/* ---- left nav rail ---- */
+
+			.nav-rail {
+				position: fixed;
+				left: 2.75rem;
+				top: 50%;
+				transform: translateY(-50%);
+				z-index: 10;
+				display: none;
+				flex-direction: column;
+				gap: 1.1rem;
+			}
+			.nav-rail a {
+				display: flex;
+				align-items: baseline;
+				gap: 0.6rem;
+				font-size: 0.72rem;
+				letter-spacing: 0.2em;
+				text-transform: uppercase;
+				color: var(--dim);
+				text-decoration: none;
+				transition: color 0.25s;
+			}
+			.nav-rail a .n {
+				font-family: ui-sans-serif, system-ui, sans-serif;
+				font-size: 0.62rem;
+			}
+			.nav-rail a:hover,
+			.nav-rail a.active {
+				color: var(--ink);
+			}
+			.nav-rail a.active .n {
+				color: var(--accent);
+			}
+			.nav-rail a.active {
+				position: relative;
+			}
+			.nav-rail a.active::before {
+				content: "";
+				position: absolute;
+				left: -1.1rem;
+				top: 50%;
+				transform: translateY(-50%);
+				width: 0.55rem;
+				height: 1px;
+				background: var(--accent);
+			}
+
+			/* ---- right "open to" rail ---- */
+
+			.open-rail {
+				position: fixed;
+				right: 2.75rem;
+				top: 50%;
+				transform: translateY(-50%);
+				z-index: 10;
+				display: none;
+				width: 14.5rem;
+			}
+			.open-rail .kicker {
+				display: flex;
+				align-items: center;
+				gap: 0.6rem;
+				font-size: 0.72rem;
+				letter-spacing: 0.24em;
+				text-transform: uppercase;
+				color: var(--dim);
+				margin-bottom: 1.4rem;
+			}
+			.open-rail .kicker::before {
+				content: "";
+				width: 0.5rem;
+				height: 0.5rem;
+				border-radius: 50%;
+				background: var(--accent);
+				box-shadow: 0 0 0 0 color-mix(in srgb, var(--accent) 60%, transparent);
+				animation: pulse 2.6s ease-out infinite;
+			}
+			@keyframes pulse {
+				0% {
+					box-shadow: 0 0 0 0 color-mix(in srgb, var(--accent) 55%, transparent);
+				}
+				70% {
+					box-shadow: 0 0 0 0.9rem transparent;
+				}
+				100% {
+					box-shadow: 0 0 0 0 transparent;
+				}
+			}
+
+			.open-rail ul {
+				list-style: none;
+				margin: 0 0 1.6rem;
+				padding: 0;
+			}
+			.open-rail li {
+				position: relative;
+				padding: 0.55rem 0 0.55rem 1.2rem;
+				border-bottom: 1px solid var(--line);
+				font-size: 1.2rem;
+				line-height: 1.25;
+				font-weight: 400;
+				transition:
+					color 0.25s,
+					padding-left 0.25s;
+			}
+			.open-rail li:last-child {
+				border-bottom: none;
+			}
+			.open-rail li::before {
+				content: "";
+				position: absolute;
+				left: 0;
+				top: 50%;
+				width: 0.45rem;
+				height: 1px;
+				background: var(--line);
+				transition:
+					width 0.25s,
+					background 0.25s;
+			}
+			.open-rail li:hover {
+				color: var(--accent);
+			}
+			.open-rail li:hover::before {
+				width: 0.9rem;
+				background: var(--accent);
+			}
+
+			.open-rail .actions {
+				display: flex;
+				flex-wrap: wrap;
+				gap: 0.6rem;
+			}
+
+			.btn {
+				display: inline-flex;
+				align-items: center;
+				gap: 0.45rem;
+				font-size: 0.78rem;
+				letter-spacing: 0.14em;
+				text-transform: uppercase;
+				text-decoration: none;
+				padding: 0.65rem 1.15rem;
+				border-radius: 999px;
+				border: 1px solid var(--line);
+				color: var(--ink);
+				transition:
+					background 0.25s,
+					color 0.25s,
+					border-color 0.25s;
+			}
+			.btn svg {
+				width: 0.95em;
+				height: 0.95em;
+			}
+			.btn:hover {
+				border-color: var(--accent);
+				color: var(--accent);
+			}
+			.btn.primary {
+				background: var(--accent);
+				border-color: var(--accent);
+				color: var(--accent-ink);
+			}
+			.btn.primary:hover {
+				filter: brightness(1.08);
+				color: var(--accent-ink);
+			}
+
+			/* ---- masthead ---- */
+
+			.masthead {
+				text-align: center;
+			}
+
+			.masthead h1 {
+				margin: 0;
+				font-size: clamp(3.2rem, 15vw, 7.5rem);
+				line-height: 0.95;
+				font-weight: 400;
+				letter-spacing: -0.02em;
+			}
+
+			.tagline {
+				margin: 2.25rem 0 0;
+				font-size: 1.25rem;
+				font-style: italic;
+			}
+
+			.place {
+				margin: 0.4rem 0 0;
+				font-size: 0.95rem;
+				text-transform: uppercase;
+				letter-spacing: 0.22em;
+				color: var(--dim);
+			}
+
+			.currently {
+				margin: 2rem auto 0;
+				max-width: 26rem;
+				font-size: 1rem;
+				color: var(--body);
+			}
+			.currently + .currently {
+				margin-top: 0.75rem;
+			}
+			.currently b {
+				font-weight: 400;
+				text-transform: uppercase;
+				font-size: 0.78rem;
+				letter-spacing: 0.2em;
+				color: var(--accent);
+				display: block;
+				margin-bottom: 0.3rem;
+			}
+
+			/* rotating badge */
+			.spin {
+				position: relative;
+				width: 10rem;
+				height: 10rem;
+				margin: 2.75rem auto 0;
+			}
+			.spin svg {
+				position: absolute;
+				inset: 0;
+				width: 100%;
+				height: 100%;
+			}
+			.spin .ring {
+				font-family: ui-sans-serif, system-ui, sans-serif;
+				font-size: 10.5px;
+				letter-spacing: 0.32em;
+				text-transform: uppercase;
+				fill: var(--dim);
+			}
+			.spin .asterisk {
+				position: absolute;
+				inset: 0;
+				display: grid;
+				place-items: center;
+				font-size: 1.9rem;
+				color: var(--accent);
+			}
+			@keyframes rotate {
+				to {
+					transform: rotate(360deg);
+				}
+			}
+			.spin .ring-group {
+				animation: rotate 28s linear infinite;
+				transform-origin: 50% 50%;
+			}
+
+			/* ---- masthead links ---- */
+
+			.links {
+				margin: 2.75rem 0 0;
+				display: flex;
+				flex-wrap: wrap;
+				justify-content: center;
+				gap: 0.75rem 1.5rem;
+				font-size: 1.05rem;
+			}
+
+			.links a {
+				display: inline-flex;
+				align-items: center;
+				gap: 0.5rem;
+				color: var(--ink);
+				text-decoration: none;
+				border-bottom: 1px solid var(--line);
+				padding-bottom: 2px;
+				transition:
+					color 0.2s,
+					border-color 0.2s;
+			}
+			.links a:hover {
+				color: var(--accent);
+				border-bottom-color: var(--accent);
+			}
+			.links a svg {
+				width: 1.05em;
+				height: 1.05em;
+				flex: none;
+				color: var(--dim);
+				transition: color 0.2s;
+			}
+			.links a:hover svg {
+				color: var(--accent);
+			}
+
+			/* ---- sections ---- */
+
+			section {
+				margin-top: 6.5rem;
+			}
+
+			h2 {
+				margin: 0 0 2.5rem;
+				display: flex;
+				align-items: baseline;
+				gap: 0.8rem;
+				font-size: 0.95rem;
+				font-weight: 400;
+				text-transform: uppercase;
+				letter-spacing: 0.28em;
+				color: var(--dim);
+				border-bottom: 1px solid var(--line);
+				padding-bottom: 1rem;
+			}
+			h2 .num {
+				font-family: ui-sans-serif, system-ui, sans-serif;
+				font-size: 0.75rem;
+				letter-spacing: 0.1em;
+				color: var(--accent);
+			}
+
+			.entry {
+				margin-bottom: 2.75rem;
+			}
+			.entry:last-child {
+				margin-bottom: 0;
+			}
+
+			.entry .role {
+				font-size: 1.35rem;
+				line-height: 1.35;
+				font-weight: 400;
+				transition: color 0.25s;
+			}
+			.entry:hover .role {
+				color: var(--accent);
+			}
+
+			/* color-coded pills */
+			.pills {
+				display: flex;
+				flex-wrap: wrap;
+				gap: 0.4rem;
+				margin: 0.55rem 0;
+			}
+			.pill {
+				font-family: ui-sans-serif, system-ui, sans-serif;
+				font-size: 0.62rem;
+				letter-spacing: 0.14em;
+				text-transform: uppercase;
+				padding: 0.24rem 0.65rem;
+				border-radius: 999px;
+				border: 1px solid;
+			}
+			.pill-research {
+				color: var(--pr);
+				border-color: color-mix(in srgb, var(--pr) 50%, transparent);
+				background: color-mix(in srgb, var(--pr) 12%, transparent);
+			}
+			.pill-policy {
+				color: var(--pp);
+				border-color: color-mix(in srgb, var(--pp) 50%, transparent);
+				background: color-mix(in srgb, var(--pp) 12%, transparent);
+			}
+			.pill-advocacy {
+				color: var(--pa);
+				border-color: color-mix(in srgb, var(--pa) 50%, transparent);
+				background: color-mix(in srgb, var(--pa) 12%, transparent);
+			}
+			.pill-legal {
+				color: var(--pl);
+				border-color: color-mix(in srgb, var(--pl) 50%, transparent);
+				background: color-mix(in srgb, var(--pl) 12%, transparent);
+			}
+			.pill-media {
+				color: var(--pm);
+				border-color: color-mix(in srgb, var(--pm) 50%, transparent);
+				background: color-mix(in srgb, var(--pm) 12%, transparent);
+			}
+
+			.entry .meta {
+				margin: 0;
+				font-size: 0.9rem;
+				text-transform: uppercase;
+				letter-spacing: 0.14em;
+				color: var(--dim);
+			}
+
+			.entry p {
+				margin: 0.45rem 0 0;
+				color: var(--body);
+				font-size: 1.05rem;
+				line-height: 1.7;
+			}
+
+			/* ---- writing list ---- */
+
+			.titles {
+				list-style: none;
+				margin: 0;
+				padding: 0;
+			}
+
+			.titles li {
+				display: grid;
+				grid-template-columns: 1fr auto;
+				gap: 1.5rem;
+				align-items: baseline;
+				padding: 0.9rem 0.4rem;
+				border-bottom: 1px solid var(--line);
+				font-size: 1.15rem;
+				transition:
+					background 0.25s,
+					padding-left 0.25s;
+				cursor: default;
+			}
+			.titles li:last-child {
+				border-bottom: none;
+			}
+			.titles li:hover {
+				background: var(--card);
+				padding-left: 0.9rem;
+			}
+
+			.titles .venue {
+				font-size: 0.8rem;
+				text-transform: uppercase;
+				letter-spacing: 0.14em;
+				color: var(--dim);
+				white-space: nowrap;
+			}
+
+			.titles a {
+				color: var(--ink);
+				text-decoration: none;
+				transition: color 0.2s;
+			}
+			.titles li:hover a,
+			.titles a:hover {
+				color: var(--accent);
+			}
+			.titles a::after {
+				content: "↗";
+				font-size: 0.55em;
+				vertical-align: 0.35em;
+				margin-left: 0.35em;
+				color: var(--dim);
+				transition: color 0.2s;
+			}
+			.titles li:hover a::after,
+			.titles a:hover::after {
+				color: var(--accent);
+			}
+
+			/* ---- footer ---- */
+
+			footer {
+				margin-top: 6.5rem;
+				padding-top: 2.5rem;
+				border-top: 1px solid var(--line);
+				color: var(--dim);
+				font-size: 0.98rem;
+			}
+			footer .edu {
+				color: var(--ink);
+				font-size: 1.05rem;
+				margin-bottom: 0.5rem;
+			}
+			footer p {
+				margin: 0;
+			}
+
+			/* ---- mobile "open to" inline block ---- */
+
+			.open-inline {
+				display: block;
+				margin-top: 4rem;
+				padding: 2rem 1.5rem;
+				border: 1px solid var(--line);
+				border-radius: 4px;
+				text-align: center;
+			}
+			.open-inline .kicker {
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				gap: 0.6rem;
+				font-size: 0.72rem;
+				letter-spacing: 0.24em;
+				text-transform: uppercase;
+				color: var(--dim);
+				margin-bottom: 1rem;
+			}
+			.open-inline .kicker::before {
+				content: "";
+				width: 0.45rem;
+				height: 0.45rem;
+				border-radius: 50%;
+				background: var(--accent);
+			}
+			.open-inline .roles {
+				font-size: 1.3rem;
+				line-height: 1.8;
+				font-style: italic;
+				margin: 0 0 1.5rem;
+			}
+			.open-inline .actions {
+				display: flex;
+				justify-content: center;
+				flex-wrap: wrap;
+				gap: 0.6rem;
+			}
+
+			/* ---- wide screens: rails on, inline off ---- */
+
+			@media (min-width: 1180px) {
+				main {
+					padding: 7rem 1.5rem 4rem;
+				}
+				.nav-rail {
+					display: flex;
+				}
+				.open-rail {
+					display: block;
+				}
+				.open-inline {
+					display: none;
+				}
+				.masthead h1 {
+					margin-top: 1.5rem;
+				}
+			}
+
+			/* ---- reveal on scroll ---- */
+
+			.reveal {
+				opacity: 0;
+				transform: translateY(1.25rem);
+				transition:
+					opacity 0.7s ease,
+					transform 0.7s ease;
+			}
+			.reveal.in {
+				opacity: 1;
+				transform: none;
+			}
+
+			@media (prefers-reduced-motion: reduce) {
+				html {
+					scroll-behavior: auto;
+				}
+				.spin .ring-group {
+					animation: none;
+				}
+				.open-rail .kicker::before {
+					animation: none;
+				}
+				.reveal {
+					opacity: 1;
+					transform: none;
+					transition: none;
+				}
+			}
+
+			@media (max-width: 480px) {
+				main {
+					padding-top: 5.5rem;
+				}
+				.titles li {
+					grid-template-columns: 1fr;
+					gap: 0.2rem;
+				}
+				.theme-toggle {
+					top: 0.9rem;
+					right: 1rem;
+				}
+			}
+		</style>
+	</head>
+	<body>
+		<!-- theme toggle (icon only) -->
+		<button
+			class="theme-toggle"
+			id="theme-toggle"
+			aria-label="Toggle color theme"
+		>
+			<svg
+				class="icon-sun"
+				viewBox="0 0 24 24"
+				fill="none"
+				stroke="currentColor"
+				stroke-width="1.5"
+				stroke-linecap="round"
+			>
+				<circle cx="12" cy="12" r="4.5" />
+				<path
+					d="M12 2.5v3M12 18.5v3M2.5 12h3M18.5 12h3M5.3 5.3l2.1 2.1M16.6 16.6l2.1 2.1M18.7 5.3l-2.1 2.1M7.4 16.6l-2.1 2.1"
+				/>
+			</svg>
+			<svg
+				class="icon-moon"
+				viewBox="0 0 24 24"
+				fill="none"
+				stroke="currentColor"
+				stroke-width="1.5"
+				stroke-linecap="round"
+			>
+				<path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5Z" />
+			</svg>
+		</button>
+
+		<!-- left margin: section nav, fixed while scrolling -->
+		<nav class="nav-rail" aria-label="Sections">
+			<a href="#experience" data-spy="experience"
+				><span class="n">01</span> Experience</a
+			>
+			<a href="#extracurricular" data-spy="extracurricular"
+				><span class="n">02</span> Extracurricular</a
+			>
+			<a href="#writing" data-spy="writing"
+				><span class="n">03</span> Writing</a
+			>
+		</nav>
+
+		<!-- right margin: what I'm looking for, fixed while scrolling -->
+		<aside class="open-rail" aria-label="Open to roles">
+			<div class="kicker">Open to</div>
+			<ul>
+				<li>Tech policy</li>
+				<li>Compliance</li>
+				<li>Research</li>
+				<li>Data privacy</li>
+				<li>Legal practice</li>
+			</ul>
+			<div class="actions">
+				<a
+					class="btn primary"
+					href="mailto:manjney@gmail.com?subject=Open%20to%20roles%20—%20Anjney%20Mital"
+				>
+					<svg
+						viewBox="0 0 24 24"
+						fill="none"
+						stroke="currentColor"
+						stroke-width="1.5"
+						stroke-linecap="round"
+					>
+						<rect x="3" y="5.5" width="18" height="13" rx="2" />
+						<path d="m3.5 7 8.5 6 8.5-6" />
+					</svg>
+					Email
+				</a>
+				<a
+					class="btn"
+					href="https://www.linkedin.com/in/anjneym/"
+					target="_blank"
+					rel="noopener"
+				>
+					<svg viewBox="0 0 24 24" fill="currentColor" stroke="none">
+						<path
+							d="M4.98 3.5a1.75 1.75 0 1 1 0 3.5 1.75 1.75 0 0 1 0-3.5ZM3.5 8.25h3V20.5h-3V8.25Zm4.75 0h2.9v1.64h.04c.4-.72 1.45-1.84 3.05-1.84 3.2 0 3.85 2.17 3.85 5V20.5h-3v-6.6c0-1.57-.03-3.6-2.15-3.6-2.15 0-2.49 1.75-2.49 3.55v6.65h-2.9V8.25Z"
+						/>
+					</svg>
+					LinkedIn
+				</a>
+			</div>
+		</aside>
+
+		<main>
+			<header class="masthead">
+				<h1>Anjney Mital</h1>
+				<p class="tagline">Tech policy, law &amp; advocacy</p>
+				<p class="place">New Delhi</p>
+
+				<p class="currently">
+					<b>Currently</b>
+					Research Associate, Digital &amp; AI — Koita Centre for Digital Health
+					@ Ashoka University
+				</p>
+
+				<!-- mobile / narrow-screen version of the "open to" panel -->
+				<div class="open-inline">
+					<div class="kicker">Open to</div>
+					<p class="roles">
+						Tech policy · Compliance · Research · Data privacy · Legal
+						practice
+					</p>
+					<div class="actions">
+						<a
+							class="btn primary"
+							href="mailto:manjney@gmail.com?subject=Open%20to%20roles%20—%20Anjney%20Mital"
+						>
+							<svg
+								viewBox="0 0 24 24"
+								fill="none"
+								stroke="currentColor"
+								stroke-width="1.5"
+								stroke-linecap="round"
+							>
+								<rect x="3" y="5.5" width="18" height="13" rx="2" />
+								<path d="m3.5 7 8.5 6 8.5-6" />
+							</svg>
+							Email
+						</a>
+						<a
+							class="btn"
+							href="https://www.linkedin.com/in/anjneym/"
+							target="_blank"
+							rel="noopener"
+						>
+							<svg viewBox="0 0 24 24" fill="currentColor" stroke="none">
+								<path
+									d="M4.98 3.5a1.75 1.75 0 1 1 0 3.5 1.75 1.75 0 0 1 0-3.5ZM3.5 8.25h3V20.5h-3V8.25Zm4.75 0h2.9v1.64h.04c.4-.72 1.45-1.84 3.05-1.84 3.2 0 3.85 2.17 3.85 5V20.5h-3v-6.6c0-1.57-.03-3.6-2.15-3.6-2.15 0-2.49 1.75-2.49 3.55v6.65h-2.9V8.25Z"
+								/>
+							</svg>
+							LinkedIn
+						</a>
+					</div>
+				</div>
+
+				<!-- rotating badge -->
+				<div class="spin" aria-hidden="true">
+					<svg viewBox="0 0 160 160">
+						<defs>
+							<path
+								id="circ"
+								d="M 80,80 m -62,0 a 62,62 0 1,1 124,0 a 62,62 0 1,1 -124,0"
+							/>
+						</defs>
+						<g class="ring-group">
+							<text class="ring">
+								<textPath href="#circ">
+									Tech Policy · Law · Advocacy · New Delhi ·&#160;
+								</textPath>
+							</text>
+						</g>
+					</svg>
+					<span class="asterisk">✳</span>
+				</div>
+
+				<p class="links">
+					<a href="mailto:manjney@gmail.com">
+						<svg
+							viewBox="0 0 24 24"
+							fill="none"
+							stroke="currentColor"
+							stroke-width="1.5"
+							stroke-linecap="round"
+						>
+							<rect x="3" y="5.5" width="18" height="13" rx="2" />
+							<path d="m3.5 7 8.5 6 8.5-6" />
+						</svg>
+						manjney@gmail.com
+					</a>
+					<a href="tel:+917838031052">
+						<svg
+							viewBox="0 0 24 24"
+							fill="none"
+							stroke="currentColor"
+							stroke-width="1.5"
+							stroke-linecap="round"
+						>
+							<path
+								d="M5.5 4h3l1.5 4-2 1.5a12 12 0 0 0 6.5 6.5L16 14l4 1.5v3c0 .9-.8 1.6-1.7 1.5C10.5 19.4 4.6 13.5 4 5.7 3.9 4.8 4.6 4 5.5 4Z"
+							/>
+						</svg>
+						+91 78380 31052
+					</a>
+						<a
+						href="https://www.linkedin.com/in/anjneym/"
+						target="_blank"
+						rel="noopener"
+					>
+						<svg viewBox="0 0 24 24" fill="currentColor" stroke="none">
+							<path
+								d="M4.98 3.5a1.75 1.75 0 1 1 0 3.5 1.75 1.75 0 0 1 0-3.5ZM3.5 8.25h3V20.5h-3V8.25Zm4.75 0h2.9v1.64h.04c.4-.72 1.45-1.84 3.05-1.84 3.2 0 3.85 2.17 3.85 5V20.5h-3v-6.6c0-1.57-.03-3.6-2.15-3.6-2.15 0-2.49 1.75-2.49 3.55v6.65h-2.9V8.25Z"
+							/>
+						</svg>
+						LinkedIn
+					</a>
+				</p>
+			</header>
+
+			<section id="experience" class="reveal" aria-labelledby="experience-h">
+				<h2 id="experience-h"><span class="num">01</span> Experience</h2>
+
+				<div class="entry">
+					<div class="role">Research Associate, Digital &amp; AI</div>
+					<div class="pills">
+						<span class="pill pill-research">Research</span>
+					</div>
+					<div class="meta">
+						Koita Centre for Digital Health @ Ashoka University · Jun 2026 –
+					</div>
+					<p>
+						Working with the WHO South-East Asia Regional Office to develop
+						and oversee implementation strategies for AI in healthcare
+						systems.
+					</p>
+				</div>
+
+				<div class="entry">
+					<div class="role">Research Intern</div>
+					<div class="pills">
+						<span class="pill pill-research">Research</span>
+					</div>
+					<div class="meta">
+						Centre for Communication Governance @ NLU Delhi · Mar – Apr 2026
+					</div>
+					<p>
+						Research and support for recommendations to the UN on AI safety
+						approaches and global perspectives on online safety regulation;
+						research notes and scoping exercises on civil society
+						organisations in the tech policy space, in India and abroad.
+					</p>
+				</div>
+
+				<div class="entry">
+					<div class="role">Digital Policy Fellow</div>
+					<div class="pills">
+						<span class="pill pill-policy">Policy</span>
+					</div>
+					<div class="meta">Esya Centre, Delhi · May – Jul 2025</div>
+					<p>
+						Selected for the first cohort of three. Worked with the Esya
+						Centre team and mentorship to produce a policy brief on digital
+						public goods in India —
+						<em>
+							IndiaStack: Can Techno-Solutionism Herald a New Age of Digital
+							Governance for Indians?
+						</em>
+					</p>
+				</div>
+
+				<div class="entry">
+					<div class="role">Digital Literacy Intern &amp; Fellow</div>
+					<div class="pills">
+						<span class="pill pill-advocacy">Advocacy</span>
+					</div>
+					<div class="meta">
+						Internet Freedom Foundation · Dec 2023 – Mar 2025
+					</div>
+					<p>
+						Led the digital literacy and operations vertical during a key
+						transitional period. Spearheaded research and advocacy on the
+						DPDP Act, the Broadcasting Bill, and DigiYatra — engaging
+						policymakers, stakeholders, and the public — and co-ordinated
+						joint campaigns with civil society organisations and advocates.
+					</p>
+				</div>
+
+				<div class="entry">
+					<div class="role">Legal Intern</div>
+					<div class="pills">
+						<span class="pill pill-legal">Legal</span>
+					</div>
+					<div class="meta">CaseAdvise · Jul – Aug 2023</div>
+					<p>
+						Drafted legal notices, replies, written statements, replications,
+						and resolution plans; shadowed advocates in RERA, IBC, family
+						law, Citizenship Act, CPC, and arbitration and conciliation
+						matters; extensive legal research and data collection.
+					</p>
+				</div>
+
+				<div class="entry">
+					<div class="role">
+						Telangana Gig &amp; Platform Workers’ Union (TGPWU)
+					</div>
+					<div class="pills">
+						<span class="pill pill-advocacy">Advocacy</span>
+					</div>
+					<div class="meta">FemLab.Co · Mar – Apr 2023</div>
+					<p>
+						Supported the union’s advocacy on the labour market and gig and
+						platform workers across Telangana, and its efforts to organise
+						workers on digital platforms.
+					</p>
+				</div>
+
+				<div class="entry">
+					<div class="role">Research Intern</div>
+					<div class="pills">
+						<span class="pill pill-media">Media</span>
+					</div>
+					<div class="meta">
+						Newslaundry – Oxfam India · The Media Rumble · Apr – Sep 2022
+					</div>
+					<p>
+						Worked on the 2020–21
+						<em>Caste &amp; Gender Representation in Indian Newsrooms</em>
+						reports for The Media Rumble in collaboration with Oxfam India —
+						interviews with journalists, research, data collection, and
+						academic writing.
+					</p>
+				</div>
+			</section>
+
+			<section
+				id="extracurricular"
+				class="reveal"
+				aria-labelledby="extracurricular-h"
+			>
+				<h2 id="extracurricular-h">
+					<span class="num">02</span> Extracurricular
+				</h2>
+
+				<div class="entry">
+					<div class="role">AI–Law Project</div>
+					<div class="meta">
+						Team of technologists, lawyers &amp; engineers
+					</div>
+					<p>
+						Developed a GPT-3-enabled platform to enable easier access to
+						law and to lawyers, through natural-language processing of
+						complex legal queries.
+					</p>
+				</div>
+
+				<div class="entry">
+					<div class="role">
+						Student Member, Indian Civil Liberties Union
+					</div>
+					<div class="meta">Under Adv. Anas Tanwir</div>
+				</div>
+
+				<div class="entry">
+					<div class="role">Mooting</div>
+					<div class="meta">
+						Quarter-finalist, 3rd National Forensic Science University
+						Technological Moot
+					</div>
+				</div>
+
+				<div class="entry">
+					<div class="role">Internet Society</div>
+					<div class="meta">Shortlisted, IGF Youth Ambassadors Program</div>
+				</div>
+
+				<div class="entry">
+					<div class="role">SLS–Hyderabad</div>
+					<div class="meta">
+						President, Centre for the Rights of Differently Abled · Member,
+						Centre for Specialization in Cyber Law Studies
+					</div>
+				</div>
+
+				<div class="entry">
+					<div class="role">CopyrightX</div>
+					<div class="meta">
+						Berkman Klein Center for Internet &amp; Society, Harvard
+					</div>
+				</div>
+			</section>
+
+			<section id="writing" class="reveal" aria-labelledby="writing-h">
+				<h2 id="writing-h"><span class="num">03</span> Writing</h2>
+
+				<ul class="titles">
+					<li>
+						<a href="https://anjney.notion.site/Anjney-Mital-24fff946ffd78077adcdca6d7f53ed75" target="_blank" rel="noopener">
+							IndiaStack: Can Techno-Solutionism Herald a New Age of Digital
+							Governance for Indians?
+						</a>
+						<span class="venue">Esya Centre</span>
+					</li>
+					<li>
+						<a href="https://internetfreedom.in/legislative-brief-2024-budget/" target="_blank" rel="noopener">
+							Legislative Brief on Digital Rights
+						</a>
+						<span class="venue">IFF</span>
+					</li>
+					<li>
+						<a href="https://internetfreedom.in/insta-political-content-limit/" target="_blank" rel="noopener">
+							Instagram Wants to Throttle Politics
+						</a>
+						<span class="venue">IFF</span>
+					</li>
+					<li>
+						<a href="https://internetfreedom.in/2024-budget-and-digital-rights/" target="_blank" rel="noopener">
+							2024 Budget and Digital Rights
+						</a>
+						<span class="venue">IFF</span>
+					</li>
+					<li>
+						<a href="https://internetfreedom.in/2024-budget-economic-survey/" target="_blank" rel="noopener">
+							2024 Economic Survey
+						</a>
+						<span class="venue">IFF</span>
+					</li>
+					<li>
+						<a href="https://internetfreedom.in/digi-yatra-foundation-open-up-the-doors/" target="_blank" rel="noopener">
+							Hey DigiYatra Foundation, Open Up the Doors
+						</a>
+						<span class="venue">IFF</span>
+					</li>
+					<li>
+						<a href="https://internetfreedom.in/2024-year-in-review-community-operations-fundraising/" target="_blank" rel="noopener">
+							2024 Year in Review
+						</a>
+						<span class="venue">IFF</span>
+					</li>
+					<li>
+						<a href="https://cdn.prod.website-files.com/6113c2e0f67a66749c146bf4/6348f59c5482ba551d0ca6bd_TMR%202022%20Caste%20Report_Final%20%282%29_compressed%20%281%29.pdf" target="_blank" rel="noopener">
+							Caste &amp; Gender Representation in India
+						</a>
+						<span class="venue">Oxfam &amp; The Media Rumble</span>
+					</li>
+					<li>
+						<a href="https://cdn.prod.website-files.com/6113c2e0f67a66749c146bf4/6350e04d38c7c907a61e2e7a_final%20Gender_Report_V3_compressed.pdf" target="_blank" rel="noopener">
+							Gender Representation in Indian Newsrooms
+						</a>
+						<span class="venue">Oxfam &amp; The Media Rumble</span>
+					</li>
+					<li>
+						<a href="https://www.themediarumble.com/reports" target="_blank" rel="noopener">
+							The Media Rumble Reports
+						</a>
+						<span class="venue">Index</span>
+					</li>
+					<li>
+						<a href="https://www.ijllr.com/post/kafka-s-the-trial-an-analysis-of-the-current-indian-legal-atmosphere" target="_blank" rel="noopener">
+							Kafka’s The Trial: An Analysis of the Current Indian Legal
+							Atmosphere
+						</a>
+						<span class="venue">IJLLR</span>
+					</li>
+				</ul>
+			</section>
+
+			<footer>
+				<p class="edu">
+					B.A. LL.B., Symbiosis Law School, Hyderabad · 2021–2026
+				</p>
+				<p>
+					Enrolment as an advocate with the Bar Council in progress.
+				</p>
+			</footer>
+		</main>
+
+		<script>
+			// theme toggle
+			(function () {
+				var btn = document.getElementById("theme-toggle");
+				btn.addEventListener("click", function () {
+					var next =
+						document.documentElement.getAttribute("data-theme") === "dark"
+							? "light"
+							: "dark";
+					document.documentElement.setAttribute("data-theme", next);
+					try {
+						localStorage.setItem("anjney-theme", next);
+					} catch (e) {}
+				});
+			})();
+
+			// gentle scroll reveal
+			(function () {
+				var reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+				var items = document.querySelectorAll(".reveal");
+				if (reduce || !("IntersectionObserver" in window)) {
+					items.forEach(function (el) {
+						el.classList.add("in");
+					});
+					return;
+				}
+				var io = new IntersectionObserver(
+					function (entries) {
+						entries.forEach(function (e) {
+							if (e.isIntersecting) {
+								e.target.classList.add("in");
+								io.unobserve(e.target);
+							}
+						});
+					},
+					{ threshold: 0.1 },
+				);
+				items.forEach(function (el) {
+					io.observe(el);
+				});
+			})();
+
+			// left-rail scroll-spy: highlight the section nearest screen centre
+			(function () {
+				var links = document.querySelectorAll(".nav-rail a[data-spy]");
+				var sections = [];
+				links.forEach(function (a) {
+					var s = document.getElementById(a.getAttribute("data-spy"));
+					if (s) sections.push({ id: a.getAttribute("data-spy"), el: s, link: a });
+				});
+				function update() {
+					var mid = window.innerHeight * 0.5;
+					var current = null;
+					sections.forEach(function (s) {
+						var r = s.el.getBoundingClientRect();
+						if (r.top <= mid && r.bottom > mid) current = s;
+					});
+					links.forEach(function (a) {
+						a.classList.toggle("active", current && current.link === a);
+					});
+				}
+				window.addEventListener("scroll", update, { passive: true });
+				window.addEventListener("resize", update);
+				update();
+			})();
+		</script>
+	</body>
+</html>
